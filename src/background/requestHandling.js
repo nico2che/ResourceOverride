@@ -39,6 +39,9 @@
                             const matchedObj = match(ruleObj.match, requestUrl);
                             const newUrl = matchReplace(matchedObj, ruleObj.replace, requestUrl);
                             if (matchedObj.matched) {
+                                let badgeCount = bgapp.badgeMap.get(tabId) || 0;
+                                bgapp.badgeMap.set(tabId, ++badgeCount);
+                                bgapp.updateBadge(tabId, '' + badgeCount);
                                 logOnTab(tabId, "URL Override Matched: " + requestUrl +
                                     "   to:   " + newUrl + "   match url: " + ruleObj.match, true);
                                 if (requestUrl !== newUrl) {
@@ -51,6 +54,10 @@
                             }
                         } else if (ruleObj.type === "fileOverride" &&
                             match(ruleObj.match, requestUrl).matched) {
+                            
+                                let badgeCount = bgapp.badgeMap.get(tabId) || 0;
+                                bgapp.badgeMap.set(tabId, ++badgeCount);
+                                bgapp.updateBadge(tabId, '' + badgeCount);
 
                             logOnTab(tabId, "File Override Matched: " + requestUrl + "   match url: " +
                                 ruleObj.match, true);

@@ -16,6 +16,7 @@
 
         const updateTabCallback = function(tabId, changeinfo, tab) {
             urls[tabId] = tab.url;
+            bgapp.badgeMap.set(tabId, 0);
         };
 
         // Not all tabs will fire an update event. If the page is pre-rendered,
@@ -32,6 +33,7 @@
                 fn(urls[tabId]);
             });
             delete urls[tabId];
+            bgapp.badgeMap.delete(tabId);
         };
 
         // init

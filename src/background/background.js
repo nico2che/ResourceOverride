@@ -2,8 +2,16 @@
 {
     bgapp.ruleDomains = {};
     bgapp.syncFunctions = [];
+    bgapp.badgeMap = new Map();
 
     const simpleError = bgapp.util.simpleError;
+
+    bgapp.updateBadge = function(tabId, text) {
+        if (localStorage.showBadgeCount === "false") return;
+        const color = '#099';
+        chrome.browserAction.setBadgeText(text && { text, tabId });
+        chrome.browserAction.setBadgeBackgroundColor({ color, tabId });
+    };
 
     // Called when the user clicks on the browser action icon.
     chrome.browserAction.onClicked.addListener(function() {
@@ -129,6 +137,9 @@
     }
     if (localStorage.showLogs === undefined) {
         localStorage.showLogs = "false";
+    }
+    if (localStorage.showBadgeCount === undefined) {
+        localStorage.showBadgeCount = "true";
     }
 
     // init domain storage
